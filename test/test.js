@@ -98,12 +98,12 @@ describe('node-aes-gcm', function () {
 
   describe('NIST Test Case 1', function () {
     before(function () {
-      key = new Buffer('00000000000000000000000000000000', 'hex');
+      key = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
       iv = new Buffer('000000000000000000000000', 'hex');
       plaintext = new Buffer([]);
       aad = new Buffer([]);
       ciphertext = new Buffer([]);
-      auth_tag = new Buffer('58e2fccefa7e3061367f1d57a4e7455a', 'hex');
+      auth_tag = new Buffer('530f8afbc74536b9a963b4f1c4cb738b', 'hex');
     });
 
     runEncryptDecryptTestCases(true);
@@ -111,12 +111,12 @@ describe('node-aes-gcm', function () {
 
   describe('NIST Test Case 2', function () {
     before(function () {
-      key = new Buffer('00000000000000000000000000000000', 'hex');
+      key = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
       iv = new Buffer('000000000000000000000000', 'hex');
       plaintext = new Buffer('00000000000000000000000000000000', 'hex');
       aad = new Buffer([]);
-      ciphertext = new Buffer('0388dace60b6a392f328c2b971b2fe78', 'hex');
-      auth_tag = new Buffer('ab6e47d42cec13bdf53a67b21257bddf', 'hex');
+      ciphertext = new Buffer('cea7403d4d606b6e074ec5d3baf39d18', 'hex');
+      auth_tag = new Buffer('d0d1c8a799996bf0265b98b5d48ab919', 'hex');
     });
 
     runEncryptDecryptTestCases(true);
@@ -124,18 +124,15 @@ describe('node-aes-gcm', function () {
 
   describe('NIST Test Case 3', function () {
     before(function () {
-      key = new Buffer('feffe9928665731c6d6a8f9467308308', 'hex');
+      key = new Buffer('feffe9928665731c6d6a8f9467308308feffe9928665731c6d6a8f9467308308', 'hex');
       iv = new Buffer('cafebabefacedbaddecaf888', 'hex');
       plaintext = new Buffer('d9313225f88406e5a55909c5aff5269a' +
                              '86a7a9531534f7da2e4c303d8a318a72' +
                              '1c3c0c95956809532fcf0e2449a6b525' +
                              'b16aedf5aa0de657ba637b391aafd255', 'hex');
       aad = new Buffer([]);
-      ciphertext = new Buffer('42831ec2217774244b7221b784d0d49c' +
-                              'e3aa212f2c02a4e035c17e2329aca12e' +
-                              '21d514b25466931c7d8f6a5aac84aa05' +
-                              '1ba30b396a0aac973d58e091473f5985', 'hex');
-      auth_tag = new Buffer('4d5c2af327cd64a62cf35abd2ba6fab4', 'hex');
+      ciphertext = new Buffer('522dc1f099567d07f47f37a32a84427d643a8cdcbfe5c0c97598a2bd2555d1aa8cb08e48590dbb3da7b08b1056828838c5f61e6393ba7a0abcc9f662898015ad', 'hex');
+      auth_tag = new Buffer('b094dac5d93471bdec1a502270e3cc6c', 'hex');
     });
 
     runEncryptDecryptTestCases(true);
@@ -143,18 +140,15 @@ describe('node-aes-gcm', function () {
 
   describe('NIST Test Case 4', function () {
     before(function () {
-      key = new Buffer('feffe9928665731c6d6a8f9467308308', 'hex');
+      key = new Buffer('feffe9928665731c6d6a8f9467308308feffe9928665731c6d6a8f9467308308', 'hex');
       iv = new Buffer('cafebabefacedbaddecaf888', 'hex');
       plaintext = new Buffer('d9313225f88406e5a55909c5aff5269a' +
                              '86a7a9531534f7da2e4c303d8a318a72' +
                              '1c3c0c95956809532fcf0e2449a6b525' +
                              'b16aedf5aa0de657ba637b39', 'hex');
       aad = new Buffer('feedfacedeadbeeffeedfacedeadbeefabaddad2', 'hex');
-      ciphertext = new Buffer('42831ec2217774244b7221b784d0d49c' +
-                              'e3aa212f2c02a4e035c17e2329aca12e' +
-                              '21d514b25466931c7d8f6a5aac84aa05' +
-                              '1ba30b396a0aac973d58e091', 'hex');
-      auth_tag = new Buffer('5bc94fbc3221a5db94fae95ae7121a47', 'hex');
+      ciphertext = new Buffer('522dc1f099567d07f47f37a32a84427d643a8cdcbfe5c0c97598a2bd2555d1aa8cb08e48590dbb3da7b08b1056828838c5f61e6393ba7a0abcc9f662', 'hex');
+      auth_tag = new Buffer('76fc6ece0f4e1768cddf8853bb2d551b', 'hex');
     });
 
     runEncryptDecryptTestCases(true);
@@ -162,7 +156,7 @@ describe('node-aes-gcm', function () {
 
   describe('Its own binary module', function () {
     before(function (done) {
-      key = new Buffer('8888888888888888');
+      key = new Buffer('88888888888888888888888888888888');
       iv = new Buffer('666666666666');
       fs.readFile('./build/Release/node_aes_gcm.node', function (err, data) {
         if (err) throw err;

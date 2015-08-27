@@ -1,3 +1,5 @@
+**NOTE: This fork has a few modifications to suit our needs. Provides AES256 GCM (256 bits encryption key) with a 96-bit IV and a 128-bit authentication tag despite contrary claims in the rest of this document...**
+
 node-aes-gcm
 ============
 

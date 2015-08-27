@@ -33,20 +33,20 @@ using namespace node;
 #define AUTH_TAG_LEN  16
 
 
-// Perform GCM mode AES-128 encryption using the provided key, IV, plaintext
+// Perform GCM mode AES-256 encryption using the provided key, IV, plaintext
 // and auth_data buffers, and return an object containing "ciphertext"
 // and "auth_tag" buffers.
 
 NAN_METHOD(GcmEncrypt) {
   NanScope();
 
-  // We want 4 buffer arguments, key needs to be 16 bytes and IV needs to be
+  // We want 4 buffer arguments, key needs to be 32 bytes and IV needs to be
   // 12 bytes
   if (args.Length() < 4 || !Buffer::HasInstance(args[0]) ||
       !Buffer::HasInstance(args[1]) || !Buffer::HasInstance(args[2]) ||
-      !Buffer::HasInstance(args[3]) || Buffer::Length(args[0]) != 16 ||
+      !Buffer::HasInstance(args[3]) || Buffer::Length(args[0]) != 32 ||
       Buffer::Length(args[1]) != 12) {
-    return NanThrowError("encrypt requires a 16-byte key Buffer, a 12-byte " \
+    return NanThrowError("encrypt requires a 32-byte key Buffer, a 12-byte " \
                       "IV Buffer, a plaintext Buffer and an auth_data " \
                       "Buffer parameter");
   }
@@ -59,11 +59,11 @@ NAN_METHOD(GcmEncrypt) {
   // Make a authentication tag buffer
   unsigned char *auth_tag = new unsigned char[AUTH_TAG_LEN];
 
-  // Init OpenSSL interace with 128-bit AES GCM cipher and give it the
+  // Init OpenSSL interace with 256-bit AES GCM cipher and give it the
   // key and IV
   int outl;
   EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-  EVP_EncryptInit_ex(ctx, EVP_aes_128_gcm(), NULL,
+  EVP_EncryptInit_ex(ctx, EVP_aes_256_gcm(), NULL,
                     (unsigned char *)Buffer::Data(args[0]),
                     (unsigned char *)Buffer::Data(args[1]));
   // Pass additional authenticated data
@@ -97,21 +97,21 @@ NAN_METHOD(GcmEncrypt) {
   NanReturnValue(return_obj);
 }
 
-// Perform GCM mode AES-128 decryption using the provided key, IV, ciphertext,
+// Perform GCM mode AES-256 decryption using the provided key, IV, ciphertext,
 // auth_data and auth_tag buffers, and return an object containing a "plaintext"
 // buffer and an "auth_ok" boolean.
 
 NAN_METHOD(GcmDecrypt) {
   NanScope();
 
-  // We want 5 buffer arguments, key needs to be 16 bytes, IV needs to be
+  // We want 5 buffer arguments, key needs to be 32 bytes, IV needs to be
   // 12 bytes, auth_tag needs to be 16 bytes
   if (args.Length() < 5 || !Buffer::HasInstance(args[0]) ||
       !Buffer::HasInstance(args[1]) || !Buffer::HasInstance(args[2]) ||
       !Buffer::HasInstance(args[3]) || !Buffer::HasInstance(args[4]) ||
-      Buffer::Length(args[0]) != 16 || Buffer::Length(args[1]) != 12 ||
-      Buffer::Length(args[4]) != 16) {
-    return NanThrowError("decrypt requires a 16-byte key Buffer, a 12-byte " \
+      Buffer::Length(args[0]) != 32 || Buffer::Length(args[1]) != 12 ||
+      Buffer::Length(args[4]) != AUTH_TAG_LEN) {
+    return NanThrowError("decrypt requires a 32-byte key Buffer, a 12-byte " \
                       "IV Buffer, a ciphertext Buffer, an auth_data " \
                       "Buffer and a 16-byte auth_tag Buffer parameter");
   }
@@ -122,11 +122,11 @@ NAN_METHOD(GcmDecrypt) {
   size_t plaintext_len = (((ciphertext_len - 1) / 16) + 1) * 16;
   unsigned char *plaintext = new unsigned char[plaintext_len];
 
-  // Init OpenSSL interace with 128-bit AES GCM cipher and give it the
+  // Init OpenSSL interace with 256-bit AES GCM cipher and give it the
   // key and IV
   int outl;
   EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-  EVP_DecryptInit_ex(ctx, EVP_aes_128_gcm(), NULL,
+  EVP_DecryptInit_ex(ctx, EVP_aes_256_gcm(), NULL,
                     (unsigned char *)Buffer::Data(args[0]),
                     (unsigned char *)Buffer::Data(args[1]));
   // Set the input reference authentication tag
