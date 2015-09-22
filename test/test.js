@@ -3,7 +3,6 @@
 // http://csrc.nist.gov/groups/ST/toolkit/BCM/documents
 // /proposedmodes/gcm/gcm-revised-spec.pdf
 
-require('buffertools');
 var fs = require('fs');
 var should = require('should');
 var gcm = require('../build/Release/node_aes_gcm');

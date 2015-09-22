@@ -6,14 +6,16 @@
   "scripts": {
     "test": "mocha -R spec"
   },
+  "engines": {
+    "node": ">=0.12"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/xorbit/node-aes-gcm.git"
   },
   "devDependencies": {
-    "should": "^5.2.0",
-    "buffertools": "^2.1.2",
-    "mocha": "^2.2.1"
+    "mocha": "^2.3.3",
+    "should": "^7.1.0"
   },
   "keywords": [
     "AES",
@@ -28,6 +30,6 @@
   "gypfile": true,
   "readmeFilename": "README.md",
   "dependencies": {
-    "nan": "^1.7.0"
+    "nan": "^2.0.9"
   }
 }
